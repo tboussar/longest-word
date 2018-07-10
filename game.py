@@ -1,6 +1,7 @@
 # game.py
 import string
 import random
+import requests
 
 # pylint: disable=missing-docstring
 # pylint: disable=too-few-public-methods
@@ -21,4 +22,10 @@ class Game():
                 letters.remove(letter)
             else:
                 return False
-        return True
+        #return True
+        return self.__check_dictionnary(word)
+
+    def __check_dictionnary(self, word):
+        r = requests.get(f"https://wagon-dictionary.herokuapp.com/{word}")
+        response = r.json()
+        return response['found']
